@@ -1,15 +1,28 @@
-import {defineCliConfig} from 'sanity/cli'
+import { defineCliConfig } from 'sanity/cli'
+
+const projectId =
+  process.env.SANITY_STUDIO_PROJECT_ID || process.env.SANITY_PROJECT_ID
+const dataset =
+  process.env.SANITY_STUDIO_DATASET || process.env.SANITY_DATASET
+
+if (!projectId) {
+  throw new Error(
+    'Missing SANITY_STUDIO_PROJECT_ID (or SANITY_PROJECT_ID) in the Sanity CLI environment.',
+  )
+}
+
+if (!dataset) {
+  throw new Error(
+    'Missing SANITY_STUDIO_DATASET (or SANITY_DATASET) in the Sanity CLI environment.',
+  )
+}
 
 export default defineCliConfig({
   api: {
-    projectId: 'f2yvolrk',
-    dataset: 'production'
+    projectId,
+    dataset,
   },
   deployment: {
-    /**
-     * Enable auto-updates for studios.
-     * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56
-     */
     autoUpdates: true,
-  }
+  },
 })
